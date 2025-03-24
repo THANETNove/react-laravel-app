@@ -22,5 +22,5 @@ require __DIR__ . '/auth.php';
 
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 
-Route::get('/create-shop', [ShopController::class, 'create'])->name('create-shop');
-Route::post('/shop-store', [ShopController::class, 'store'])->name('shop-store');
+Route::get('create-shop', [ShopController::class, 'create'])->name('create-shop');
+Route::post('shop-store', [ShopController::class, 'store'])->name('shop-store');

@@ -17,8 +17,7 @@ export default function Shop({ products }: Props) {
         <>
             <Head title="Shop" />
             <div className="mx-auto max-w-7xl p-6">
-                <Link className="mb-6 text-2xl font-bold" href={'/'}>
-                    {' '}
+                <Link className="mb-6 text-2xl font-bold" href={route('home')}>
                     Shop List{' '}
                 </Link>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
