@@ -14,6 +14,13 @@ export default defineConfig({
         react(),
         tailwindcss(),
     ],
+    build: {
+        manifest: true,
+        outDir: 'public/build',
+        rollupOptions: {
+            input: 'resources/js/app.tsx',
+        },
+    },
     esbuild: {
         jsx: 'automatic',
     },
