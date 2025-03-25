@@ -1,0 +1,33 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main # ทริกเกอร์เวิร์กโฟลว์เมื่อมีการ push ไปยัง branch "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # ใช้ Ubuntu เป็นระบบปฏิบัติการสำหรับรันเวิร์กโฟลว์
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2 # ดึงโค้ดจาก repository
+
+      - name: Install dependencies
+        run: npm install # ติดตั้ง dependencies ของโปรเจกต์ (ถ้ามี)
+
+      - name: Build app
+        run: npm run build # สร้าง build ของแอปพลิเคชัน (ถ้ามี)
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master # ใช้ SSH action เพื่อ deploy ไปยัง server
+        with:
+          host: ${{ secrets.SERVER_HOST }} # host ของ server
+          username: ${{ secrets.SERVER_USER }} # username ของ server
+          key: ${{ secrets.SERVER_KEY }} # private key สำหรับ SSH
+          script: |
+            cd /var/www/my-app # ไปยัง directory ของแอปพลิเคชันบน server
+            git pull origin main # ดึงโค้ดล่าสุดจาก repository
+            npm install # ติดตั้ง dependencies
+            npm run build # สร้าง build
+            pm2 restart my-app # restart แอปพลิเคชัน (ใช้ PM2 ในตัวอย่างนี้)
